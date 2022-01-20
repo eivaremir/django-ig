@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def login_view(request):
     if request.method == 'POST':
@@ -17,3 +17,9 @@ def login_view(request):
                 'error':'invalid username or password'
             })
     return render(request,'users/login.html')
+
+@login_required
+def logout_view(request):
+    """logout a user"""
+    logout(request)
+    return redirect("login")
